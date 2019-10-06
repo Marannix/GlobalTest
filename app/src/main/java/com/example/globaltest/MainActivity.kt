@@ -13,13 +13,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var serverViewModel: ServerViewModel
-    private val disposables = CompositeDisposable()
     private lateinit var responseCode: MutableLiveData<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         init()
     }
 
@@ -47,17 +45,9 @@ class MainActivity : AppCompatActivity() {
         responseCode.observe(this, Observer {
             responseCodeFetched.text = responseCode.value
         })
-    }
 
-    // TODO: Tapping button should call new response
-    private fun fetchNextPathResponse() {
-//        val disposable = serverRepository.fetchCurrentPathResponse()
-//        responseCodeFetched.text = serverRepository.path
-//        disposables.add(disposable)
-    }
-
-    override fun onStop() {
-        disposables.clear()
-        super.onStop()
+        fetchContentButton.setOnClickListener {
+            getServerResponse()
+        }
     }
 }
