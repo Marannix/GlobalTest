@@ -8,12 +8,57 @@
         tools:context=".MainActivity">
 
     <TextView
+            android:id="@+id/responseCodeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:text="UUID Response Code: "
+            android:fontFamily="sans-serif-black"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/responseCodeFetched"
+            app:layout_constraintBottom_toBottomOf="@+id/responseCodeFetched"/>
+
+    <TextView
+            android:id="@+id/responseCodeFetched"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/responseCodeLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/timesFetched"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+            android:id="@+id/timesFetchedLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Times Fetched: "
+            android:fontFamily="sans-serif-black"
+            app:layout_constraintTop_toTopOf="@id/timesFetched"
+            app:layout_constraintStart_toStartOf="@id/responseCodeLabel"
+            app:layout_constraintEnd_toEndOf="@id/responseCodeLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/timesFetched"/>
+
+    <TextView
+            android:id="@+id/timesFetched"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/timesFetchedLabel" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/responseCodeFetched"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/fetchContentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fetch Content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/timesFetched"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
