@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getServerResponse() {
-        serverViewModel.fetchPathResponse()
+        serverViewModel.getPathResponse()
     }
 
     private fun fetchResponseCode() {
