@@ -10,6 +10,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+private const val COUNTER_KEY = "COUNTER_KEY"
+
 class ServerRepository(private val applicationContext: Context) {
 
     private val apiServer = object : ApiService {}
@@ -43,10 +45,10 @@ class ServerRepository(private val applicationContext: Context) {
 
     // TODO: Find a way to extract shared preferences from method, placed inside here because test is failing
     private fun updateTimesFetched() {
-        counterPreferences = applicationContext.getSharedPreferences("COUNTER_KEY", 0)
-        var counter = counterPreferences.getInt("COUNTER_KEY", 0)
+        counterPreferences = applicationContext.getSharedPreferences(COUNTER_KEY, 0)
+        var counter = counterPreferences.getInt(COUNTER_KEY, 0)
         counter++
-        counterPreferences.edit().putInt("COUNTER_KEY", counter).apply()
+        counterPreferences.edit().putInt(COUNTER_KEY, counter).apply()
         timesFetched.value = counter
     }
 
