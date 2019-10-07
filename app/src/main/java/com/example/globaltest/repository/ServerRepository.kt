@@ -47,7 +47,6 @@ class ServerRepository(private val applicationContext: Context) {
         var counter = counterPreferences.getInt("COUNTER_KEY", 0)
         counter++
         counterPreferences.edit().putInt("COUNTER_KEY", counter).apply()
-        //counterPreferences.edit().apply()
         timesFetched.value = counter
     }
 
