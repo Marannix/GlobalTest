@@ -58,4 +58,9 @@ class MainActivity : AppCompatActivity() {
             getServerResponse()
         }
     }
+
+    override fun onStop() {
+        serverViewModel.clearDisposables()
+        super.onStop()
+    }
 }

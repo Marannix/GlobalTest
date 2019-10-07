@@ -13,41 +13,41 @@ import io.reactivex.schedulers.Schedulers
 class ServerRepository(private val applicationContext: Context) {
 
     private val apiServer = object : ApiService {}
-    private val disposable = CompositeDisposable()
+    private val disposables = CompositeDisposable()
     private var responseCode: MutableLiveData<String> = MutableLiveData()
     private var timesFetched: MutableLiveData<Int> = MutableLiveData()
-    private var counterPreferences: SharedPreferences = applicationContext.getSharedPreferences("COUNTER_KEY", 0)
-    private var edit: SharedPreferences.Editor = counterPreferences.edit()
+    private lateinit var counterPreferences: SharedPreferences
 
     fun fetchPathResponse() {
-        val disposables = apiServer.serviceApi().getNextPath()
+        val disposable = apiServer.serviceApi().getNextPath()
             .map { fetchNextPathResponses(it.nextPath) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, { Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show() })
-        disposable.add(disposables)
+        disposables.add(disposable)
     }
 
     private fun fetchNextPathResponses(nextPath: String) {
-        val disposables = apiServer.loadPath(nextPath).getPath()
+        val disposable = apiServer.loadPath(nextPath).getPath()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    responseCode.value = it.responseCode
                     updateTimesFetched()
                     updateResponseCode(it)
                 },
                 { Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show() }
             )
-        disposable.add(disposables)
+        disposables.add(disposable)
     }
 
+    // TODO: Find a way to extract shared preferences from method, placed inside here because test is failing
     private fun updateTimesFetched() {
-        var counter = counterPreferences.getInt("counts", 0)
+        counterPreferences = applicationContext.getSharedPreferences("COUNTER_KEY", 0)
+        var counter = counterPreferences.getInt("COUNTER_KEY", 0)
         counter++
-        edit.putInt("COUNTER_KEY", counter)
-        edit.commit()
+        counterPreferences.edit().putInt("COUNTER_KEY", counter).apply()
+        //counterPreferences.edit().apply()
         timesFetched.value = counter
     }
 
@@ -63,4 +63,7 @@ class ServerRepository(private val applicationContext: Context) {
         return timesFetched
     }
 
+    fun clearDisposables() {
+        disposables.clear()
+    }
 }

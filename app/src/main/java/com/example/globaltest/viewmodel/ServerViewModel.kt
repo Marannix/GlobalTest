@@ -26,4 +26,8 @@ class ServerViewModel(application: Application) : AndroidViewModel(application) 
     fun getTimesFetched(): MutableLiveData<Int> {
         return serverRepository.getTimesFetched()
     }
+
+    fun clearDisposables() {
+        return serverRepository.clearDisposables()
+    }
 }
