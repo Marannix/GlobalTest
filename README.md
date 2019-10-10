@@ -7,3 +7,5 @@ Nothing too fancy.
 Backend server returns a Json object with a single key, which contains a url. The url returns a path and response code.
 
 A counter is shown for the number of times the data has been fetched and the response code.
+
+I store the counter using shared preferences. 
